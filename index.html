@@ -167,17 +167,17 @@
 <script>
   // ===== URL params like the TikTok page =====
   const params = new URLSearchParams(location.search);
-  const from = (params.get("from") || "GERSON").trim();
-  const to   = (params.get("to")   || "JANETH").trim();
-  const tipo = (params.get("tipo") || "novios").trim();
+  const from = (params.get("from") || "").trim();
+  const to   = (params.get("to")   || "Mi amor").trim();
+  const tipo = (params.get("tipo") || "").trim();
 
   const title = document.getElementById("title");
   const subtitle = document.getElementById("subtitle");
   const metaTag = document.getElementById("metaTag");
   const whoTag = document.getElementById("whoTag");
 
-  whoTag.textContent = `Para: ${to} · De: ${from}`;
-  metaTag.textContent = `De ${from} para ${to} · ${tipo}`;
+  whoTag.textContent = from ? `Para: ${to} · De: ${from}` : `Para: ${to}`;
+  metaTag.textContent = tipo ? `${tipo}` : `💌`;
 
   // Personal text (edit freely)
   const msg1 = `Sabía que ibas a decir que sí, mi amor. Te elijo con paciencia y con locura.`;
