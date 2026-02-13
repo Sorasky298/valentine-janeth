@@ -1,327 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valentine 💘</title>
-  <style>
-    :root{
-      --bg1:#ff9a9e; --bg2:#fad0c4; --card:rgba(255,255,255,.16);
-      --text:#fff; --muted:rgba(255,255,255,.82); --shadow:0 18px 60px rgba(0,0,0,.22);
-      --accent:#ff4d6d; --accent2:#ffd1dc;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.22), transparent 60%),
-                  linear-gradient(135deg,var(--bg1),var(--bg2));
-      color:var(--text); height:100vh; overflow:hidden;
-      display:flex; align-items:center; justify-content:center;
-    }
-    .wrap{width:min(920px,92vw); padding:18px}
-    .card{
-      background:var(--card); border:1px solid rgba(255,255,255,.18);
-      border-radius:28px; box-shadow:var(--shadow); backdrop-filter: blur(14px);
-      padding:28px 22px;
-    }
-    .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-    .tag{
-      padding:8px 12px; border-radius:999px;
-      background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.18);
-      font-size:13px; color:var(--muted);
-    }
-    .btn{
-      appearance:none; border:0; border-radius:999px; padding:10px 14px;
-      background:rgba(0,0,0,.25); color:#fff; cursor:pointer;
-      border:1px solid rgba(255,255,255,.18);
-      transition:transform .15s ease, background .2s ease;
-      font-weight:600;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(0,0,0,.32)}
-    .btn.primary{background:rgba(255,77,109,.92)}
-    .btn.primary:hover{background:rgba(255,77,109,1)}
-    h1{margin:18px 0 8px; font-size:clamp(26px,3.6vw,44px); letter-spacing:.2px}
-    p{margin:0; color:var(--muted); line-height:1.55; font-size:clamp(14px,1.4vw,16px)}
-    .center{display:grid; gap:16px; justify-items:center; text-align:center; padding:14px 0 4px}
-    .row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:center}
-    .pill{
-      padding:10px 14px; border-radius:16px;
-      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
-      text-align:left; width:min(780px,100%);
-    }
-    .grid{
-      display:grid; gap:12px; grid-template-columns:repeat(3, minmax(0,1fr));
-      width:min(780px,100%); margin-top:10px;
-    }
-    @media (max-width:720px){ .grid{grid-template-columns:1fr} }
-    .mini{
-      background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.16);
-      border-radius:18px; padding:14px; text-align:left;
-      min-height:84px;
-    }
-    .mini b{display:block; margin-bottom:6px}
-    .fade{opacity:0; transform:translateY(6px); transition:all .35s ease}
-    .fade.show{opacity:1; transform:translateY(0)}
-    /* Start screen */
-    .overlay{
-      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      background:rgba(0,0,0,.28); backdrop-filter: blur(10px); z-index:50;
-    }
-    .start{
-      width:min(720px,92vw); padding:26px 18px;
-      border-radius:28px; background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.22); box-shadow:var(--shadow);
-      text-align:center;
-    }
-    .start h2{margin:10px 0 6px; font-size:clamp(22px,3vw,32px)}
-    .start p{margin:0; color:rgba(255,255,255,.86)}
-    /* Hearts */
-    .heart{
-      position:fixed; width:14px; height:14px; transform:rotate(45deg);
-      background:rgba(255,255,255,.72);
-      left:0; top:0; pointer-events:none; z-index:1;
-      animation: floatUp linear forwards;
-    }
-    .heart:before,.heart:after{
-      content:""; position:absolute; width:14px; height:14px; border-radius:50%;
-      background:inherit;
-    }
-    .heart:before{left:-7px; top:0}
-    .heart:after{left:0; top:-7px}
-    @keyframes floatUp{
-      from{opacity:.9; transform:translate(var(--x), 110vh) rotate(45deg) scale(var(--s))}
-      to{opacity:0; transform:translate(var(--x2), -20vh) rotate(45deg) scale(var(--s))}
-    }
-    /* Confetti canvas */
-    canvas{position:fixed; inset:0; pointer-events:none; z-index:2}
-    /* No button escape */
-    #noBtn{position:relative}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Mashiro 💛</title>
+
+<style>
+:root{
+  --bg1:#f6c1c8;
+  --bg2:#eaa0aa;
+  --glass: rgba(255,255,255,.18);
+  --border: rgba(255,255,255,.28);
+  --text: rgba(45,20,28,.92);
+  --muted: rgba(45,20,28,.7);
+  --accent:#ff5e7e;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(135deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+.card{
+  width:min(900px,92vw);
+  background:var(--glass);
+  backdrop-filter: blur(18px);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:40px;
+  box-shadow:0 30px 80px rgba(0,0,0,.2);
+  text-align:center;
+}
+
+h1{
+  font-size:2.4rem;
+  margin-bottom:10px;
+}
+
+p{
+  color:var(--muted);
+}
+
+.btn{
+  margin-top:20px;
+  padding:12px 24px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+  background:var(--accent);
+  color:#fff;
+  transition:.25s ease;
+}
+.btn:hover{ transform:scale(1.05); }
+
+.btn-secondary{
+  background:#b7838c;
+}
+
+.hidden{ display:none; }
+
+.pill{
+  margin-top:25px;
+  background:rgba(255,255,255,.14);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:20px;
+}
+
+/* GALERÍA */
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:10px;
+  margin-top:15px;
+}
+@media (max-width:720px){
+  .gallery{ grid-template-columns:1fr; }
+}
+
+.photo{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  aspect-ratio:4/3;
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* STICKERS */
+.stickers{
+  margin-top:15px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+.stk{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  background:rgba(255,255,255,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.stk img{
+  width:85%;
+  height:85%;
+  object-fit:contain;
+}
+
+/* ANIMACIÓN */
+.floating{
+  position:fixed;
+  width:60px;
+  height:60px;
+  pointer-events:none;
+  animation: drift 8s linear forwards;
+  z-index:10;
+}
+@keyframes drift{
+  from{ transform: translate(var(--sx), 105vh) rotate(var(--r)); }
+  to{ transform: translate(var(--ex), -20vh) rotate(calc(var(--r) + 80deg)); }
+}
+</style>
 </head>
+
 <body>
-  <canvas id="confetti"></canvas>
 
-  <div class="overlay" id="overlay">
-    <div class="start">
-      <div class="tag" id="whoTag">Para: </div>
-      <h2>Presiona para comenzar 💘</h2>
-      <p>Prometo que es rápido, bonito y con intención.</p>
-      <div style="height:14px"></div>
-      <button class="btn primary" id="startBtn">Empezar</button>
-      <div style="height:10px"></div>
-      <button class="btn" id="musicBtn">Música: OFF</button>
-      <p style="margin-top:10px; font-size:12px; opacity:.85">
-        Tip: si no suena, toca “Empezar” y luego “Música”.
-      </p>
-    </div>
+<div class="card" id="startCard">
+  <div style="margin-bottom:10px;font-weight:600;">
+    De: Tu Sorata ❤️ Para: Mi Mashiro
+  </div>
+  <h1>Presiona para comenzar 💘</h1>
+  <p>Prometo que es rápido, bonito y con intención.</p>
+  <button class="btn" onclick="start()">Empezar</button>
+</div>
+
+<div class="card hidden" id="questionCard">
+  <h1>¿Quieres ser mi Valentine? 💖</h1>
+  <p>No es un sueño. Es una meta. Y yo voy contigo.</p>
+  <button class="btn" onclick="sayYes()">Sí, obvio 💞</button>
+  <button class="btn btn-secondary">No 😝</button>
+</div>
+
+<div class="card hidden" id="afterYes">
+  <h1>Sabía que eras mi sí 💘</h1>
+  <p>No es un regalo. Es una decisión: caminar contigo.</p>
+
+  <div class="pill">
+    <h3>Una meta</h3>
+    <p>Esa casita en el campo no es un sueño. Es una meta. Y la vamos a cumplir paso a paso.</p>
   </div>
 
-  <audio id="bgm" loop>
-    <!-- Música libre (Pixabay). Puedes cambiar el link por otro mp3 -->
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5fae4b88a4.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="wrap">
-    <div class="card">
-      <div class="topbar">
-        <div class="tag" id="metaTag">💌</div>
-        <div class="row">
-          <button class="btn" id="toggleMusic">Música: OFF</button>
-        </div>
-      </div>
-
-      <div class="center">
-        <h1 class="fade" id="title">¿Quieres ser mi Valentine? ❤️</h1>
-        <p class="fade" id="subtitle">No es un sueño. Es una meta. Y yo voy contigo.</p>
-
-        <div class="row fade" id="buttons">
-          <button class="btn primary" id="yesBtn">Sí, obvio 💘</button>
-          <button class="btn" id="noBtn">No 😅</button>
-        </div>
-
-        <div class="pill fade" id="afterYes" style="display:none">
-          <p id="msg1" style="margin-bottom:10px"></p>
-          <div class="grid">
-            <div class="mini">
-              <b>Una meta</b>
-              <div id="metaText"></div>
-            </div>
-            <div class="mini">
-              <b>Una promesa</b>
-              <div id="promiseText"></div>
-            </div>
-            <div class="mini">
-              <b>Un final (que es inicio)</b>
-              <div id="endText"></div>
-            </div>
-          </div>
-          <div style="height:12px"></div>
-          <button class="btn primary" id="revealBtn">Ver mensajito final</button>
-          <div style="height:10px"></div>
-          <p id="finalMsg" style="display:none; font-weight:700; color:#fff"></p>
-        </div>
-      </div>
-    </div>
+  <div class="pill">
+    <h3>Una promesa</h3>
+    <p>Te elijo con paciencia y con locura. Con compromiso. Con intención real.</p>
   </div>
+
+  <div class="pill">
+    <h3>Un inicio</h3>
+    <p>No quiero que mi futuro te incluya. Mi futuro es contigo.</p>
+  </div>
+
+  <div class="pill">
+    <h3>Un pedacito de nosotros 📸</h3>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div class="pill">
+    <h3>Nailong siempre contigo 🦖💛</h3>
+    <div class="stickers" id="stickers"></div>
+  </div>
+
+</div>
 
 <script>
-  // ===== URL params like the TikTok page =====
-  const params = new URLSearchParams(location.search);
-  const from = (params.get("from") || "").trim();
-  const to   = (params.get("to")   || "Mi amor").trim();
-  const tipo = (params.get("tipo") || "").trim();
 
-  const title = document.getElementById("title");
-  const subtitle = document.getElementById("subtitle");
-  const metaTag = document.getElementById("metaTag");
-  const whoTag = document.getElementById("whoTag");
+// FOTOS (pon tus imágenes en assets/photos/)
+const photos = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg"];
 
-  whoTag.textContent = from ? `Para: ${to} · De: ${from}` : `Para: ${to}`;
-  metaTag.textContent = tipo ? `${tipo}` : `💌`;
+// STICKERS (pon tus png en assets/stickers/)
+const stickers = ["n1.png","n2.png","n3.png","n4.png","n5.png","n6.png"];
 
-  // Personal text (edit freely)
-  const msg1 = `Sabía que ibas a decir que sí, mi amor. Te elijo con paciencia y con locura.`;
-  const metaText = `Esa casita en el campo no es un sueño, es una meta. Y la vamos a cumplir paso a paso.`;
-  const promiseText = `No te prometo perfecto, te prometo presencia, esfuerzo y una vida completa contigo.`;
-  const endText = `San Valentín es hoy, pero lo nuestro es todos los días.`;
-  const finalLine = `Te amo infinitamente, ${to}. ¿Me dejas construir nuestro futuro contigo?`;
+function start(){
+  document.getElementById("startCard").classList.add("hidden");
+  document.getElementById("questionCard").classList.remove("hidden");
+}
 
-  document.getElementById("msg1").textContent = msg1;
-  document.getElementById("metaText").textContent = metaText;
-  document.getElementById("promiseText").textContent = promiseText;
-  document.getElementById("endText").textContent = endText;
-  document.getElementById("finalMsg").textContent = finalLine;
+function sayYes(){
+  document.getElementById("questionCard").classList.add("hidden");
+  document.getElementById("afterYes").classList.remove("hidden");
+  loadGallery();
+  loadStickers();
+  floatStickers(12);
+}
 
-  // ===== Music toggle (must be user-initiated) =====
-  const audio = document.getElementById("bgm");
-  let musicOn = false;
-  const setMusicLabel = () => {
-    document.getElementById("toggleMusic").textContent = `Música: ${musicOn ? "ON" : "OFF"}`;
-    document.getElementById("musicBtn").textContent = `Música: ${musicOn ? "ON" : "OFF"}`;
-  };
-  const toggleMusic = async () => {
-    try {
-      if (!musicOn) { await audio.play(); musicOn = true; }
-      else { audio.pause(); musicOn = false; }
-      setMusicLabel();
-    } catch(e){
-      // ignored
-    }
-  };
-  document.getElementById("toggleMusic").addEventListener("click", toggleMusic);
-  document.getElementById("musicBtn").addEventListener("click", toggleMusic);
-  setMusicLabel();
+function loadGallery(){
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = photos.map(p =>
+    `<div class="photo"><img src="assets/photos/${p}"></div>`
+  ).join("");
+}
 
-  // ===== Start overlay =====
-  const overlay = document.getElementById("overlay");
-  const startBtn = document.getElementById("startBtn");
-  const showMain = () => {
-    overlay.style.display = "none";
-    // reveal fades
-    document.querySelectorAll(".fade").forEach((el,i)=>{
-      setTimeout(()=>el.classList.add("show"), 90*i);
-    });
-  };
-  startBtn.addEventListener("click", () => {
-    showMain();
-    // optional auto music attempt after user gesture
-    // (won't always work, but often does)
-    toggleMusic();
-  });
+function loadStickers(){
+  const cont = document.getElementById("stickers");
+  cont.innerHTML = stickers.map(s =>
+    `<div class="stk"><img src="assets/stickers/${s}"></div>`
+  ).join("");
+}
 
-  // ===== No button escape =====
-  const noBtn = document.getElementById("noBtn");
-  noBtn.addEventListener("mouseover", () => {
-    const x = (Math.random()*220 - 110);
-    const y = (Math.random()*180 - 90);
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  });
-
-  // ===== Yes flow =====
-  const yesBtn = document.getElementById("yesBtn");
-  const buttons = document.getElementById("buttons");
-  const afterYes = document.getElementById("afterYes");
-  const revealBtn = document.getElementById("revealBtn");
-  const finalMsg = document.getElementById("finalMsg");
-
-  yesBtn.addEventListener("click", () => {
-    title.textContent = `${to}, sabía que eras mi sí 💘`;
-    subtitle.textContent = `No es un regalo. Es una decisión: caminar contigo.`;
-    buttons.style.display = "none";
-    afterYes.style.display = "block";
-    afterYes.classList.add("show");
-    spawnHearts(36);
-    burstConfetti();
-  });
-
-  revealBtn.addEventListener("click", () => {
-    finalMsg.style.display = "block";
-    revealBtn.style.display = "none";
-    spawnHearts(18);
-  });
-
-  // ===== Hearts =====
-  function spawnHearts(n=18){
-    for(let i=0;i<n;i++){
-      const h=document.createElement("div");
-      h.className="heart";
-      const x = Math.random()*100;
-      const x2 = x + (Math.random()*24 - 12);
-      const s = (Math.random()*0.9 + 0.6).toFixed(2);
-      h.style.setProperty("--x", x+"vw");
-      h.style.setProperty("--x2", x2+"vw");
-      h.style.setProperty("--s", s);
-      h.style.animationDuration = (Math.random()*2.2 + 2.2)+"s";
-      h.style.background = `rgba(255,255,255,${Math.random()*0.35+0.45})`;
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(), 5200);
-    }
+function floatStickers(times){
+  for(let i=0;i<times;i++){
+    const img=document.createElement("img");
+    img.src=`assets/stickers/${stickers[Math.floor(Math.random()*stickers.length)]}`;
+    img.className="floating";
+    img.style.setProperty("--sx",Math.random()*100+"vw");
+    img.style.setProperty("--ex",Math.random()*100+"vw");
+    img.style.setProperty("--r",(Math.random()*40-20)+"deg");
+    document.body.appendChild(img);
+    setTimeout(()=>img.remove(),8000);
   }
+}
 
-  // ===== Confetti (simple) =====
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  let W,H,confetti=[];
-  const resize=()=>{W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight;}
-  window.addEventListener("resize", resize); resize();
-
-  function burstConfetti(){
-    confetti = [];
-    const colors = ["#ffffff","#ffe3ea","#ffd1dc","#ff4d6d","#fff0f4"];
-    for(let i=0;i<160;i++){
-      confetti.push({
-        x: W/2, y: H/2,
-        vx: (Math.random()*8-4),
-        vy: (Math.random()*8-6),
-        g: 0.12 + Math.random()*0.08,
-        s: 2 + Math.random()*3,
-        a: 1,
-        c: colors[Math.floor(Math.random()*colors.length)]
-      });
-    }
-    animateConfetti();
-  }
-  let animating=false;
-  function animateConfetti(){
-    if(animating) return;
-    animating=true;
-    (function frame(){
-      ctx.clearRect(0,0,W,H);
-      confetti.forEach(p=>{
-        p.vy += p.g;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.a *= 0.985;
-        ctx.globalAlpha = Math.max(0, p.a);
-        ctx.fillStyle = p.c;
-        ctx.fillRect(p.x,p.y,p.s,p.s);
-      });
-      confetti = confetti.filter(p=>p.a>0.06 && p.y < H+30);
-      ctx.globalAlpha = 1;
-      if(confetti.length>0) requestAnimationFrame(frame);
-      else { ctx.clearRect(0,0,W,H); animating=false; }
-    })();
-  }
 </script>
+
 </body>
 </html>
