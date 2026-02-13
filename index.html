@@ -1,241 +1,814 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Mi Mashiro 💛</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>De Tu Sorata ❤️ Para Mi Mashiro</title>
 
-<style>
-:root{
-  --bg1:#f6c1c8;
-  --bg2:#eaa0aa;
-  --glass: rgba(255,255,255,.18);
-  --border: rgba(255,255,255,.28);
-  --text: rgba(45,20,28,.92);
-  --muted: rgba(45,20,28,.7);
-  --accent:#ff5e7e;
-}
+  <style>
+    :root{
+      --bgA:#ffd2da;
+      --bgB:#f6a8b6;
+      --ink: rgba(43,18,26,.92);
+      --muted: rgba(43,18,26,.72);
+      --glass: rgba(255,255,255,.18);
+      --glass2: rgba(255,255,255,.12);
+      --border: rgba(255,255,255,.26);
+      --shadow: 0 28px 90px rgba(0,0,0,.18);
+      --accent: #ff4f76;
+      --accent2:#ff96aa;
+      --ok:#2d9f7a;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--ink);
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 900px at 20% 10%, rgba(255,255,255,.35), transparent 60%),
+        radial-gradient(900px 700px at 85% 20%, rgba(255,255,255,.25), transparent 62%),
+        linear-gradient(135deg, var(--bgA), var(--bgB));
+    }
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: linear-gradient(135deg,var(--bg1),var(--bg2));
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--text);
-  overflow-x:hidden;
-}
+    /* Soft moving background shimmer */
+    .bg-shimmer{
+      position:fixed; inset:-40%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.18), transparent 70%);
+      filter: blur(18px);
+      animation: drift 16s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes drift{
+      from{ transform: translate(-2%, -2%) rotate(0deg); }
+      to{ transform: translate(2%, 3%) rotate(8deg); }
+    }
 
-.card{
-  width:min(900px,92vw);
-  background:var(--glass);
-  backdrop-filter: blur(18px);
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:40px;
-  box-shadow:0 30px 80px rgba(0,0,0,.2);
-  text-align:center;
-}
+    /* Top tiny tags */
+    .topline{
+      position:fixed;
+      left:0; right:0; top:0;
+      padding:14px 16px;
+      display:flex;
+      justify-content:center;
+      z-index:5;
+      pointer-events:none;
+    }
+    .tagbar{
+      pointer-events:auto;
+      width:min(980px,92vw);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .tag{
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+      border:1px solid var(--border);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 34px rgba(0,0,0,.10);
+      font-size:13px;
+      color:rgba(43,18,26,.78);
+    }
 
-h1{
-  font-size:2.4rem;
-  margin-bottom:10px;
-}
+    /* Main layout */
+    .wrap{
+      position:relative;
+      z-index:2;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:96px 14px 54px;
+    }
+    .card{
+      width:min(980px,92vw);
+      border-radius:30px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 240px at 20% 10%, rgba(255,255,255,.18), transparent 60%),
+                  radial-gradient(540px 220px at 80% 20%, rgba(255,255,255,.16), transparent 62%);
+      pointer-events:none;
+      opacity:.9;
+    }
 
-p{
-  color:var(--muted);
-}
+    /* Sections (slides) */
+    .slide{
+      position:relative;
+      z-index:1;
+      display:none;
+      animation: pop .35s ease;
+    }
+    .slide.active{ display:block; }
+    @keyframes pop{ from{ opacity:0; transform: translateY(8px) scale(.99);} to{opacity:1; transform:none;} }
 
-.btn{
-  margin-top:20px;
-  padding:12px 24px;
-  border:none;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:600;
-  background:var(--accent);
-  color:#fff;
-  transition:.25s ease;
-}
-.btn:hover{ transform:scale(1.05); }
+    .center{
+      text-align:center;
+      padding: 10px 10px 16px;
+    }
+    h1{
+      margin: 6px 0 10px;
+      font-size: clamp(28px, 4.2vw, 52px);
+      letter-spacing:.2px;
+      text-shadow: 0 2px 18px rgba(255,255,255,.40);
+    }
+    .subtitle{
+      margin:0 auto;
+      width:min(800px, 96%);
+      color:var(--muted);
+      font-size: clamp(14px, 1.6vw, 17px);
+      line-height:1.6;
+      text-shadow: 0 1px 12px rgba(255,255,255,.30);
+    }
 
-.btn-secondary{
-  background:#b7838c;
-}
+    /* Buttons */
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      padding: 12px 18px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:800;
+      letter-spacing:.2px;
+      transition: transform .15s ease, filter .15s ease, background .2s ease;
+      box-shadow: 0 18px 40px rgba(0,0,0,.12);
+      user-select:none;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--accent), #ff2f62);
+      color:white;
+    }
+    .btn.secondary{
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.95);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.20);
+      border:1px solid rgba(255,255,255,.22);
+      color: rgba(43,18,26,.85);
+      box-shadow:none;
+    }
+    .btn:hover{ transform: translateY(-1px) scale(1.02); filter: saturate(1.05); }
 
-.hidden{ display:none; }
+    /* Micro cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      width:min(920px, 100%);
+      margin: 16px auto 6px;
+      padding: 0 8px;
+    }
+    @media (max-width:860px){ .grid{ grid-template-columns:1fr; } }
 
-.pill{
-  margin-top:25px;
-  background:rgba(255,255,255,.14);
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:20px;
-}
+    .mini{
+      border-radius:22px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.22);
+      padding: 16px 16px;
+      box-shadow: 0 16px 60px rgba(0,0,0,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .mini::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.26), transparent 65%);
+      transform: translate(10%, -10%);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .mini b{
+      display:block;
+      margin-bottom:8px;
+      font-size: 16px;
+    }
+    .mini span{
+      color: var(--muted);
+      font-size: 15px;
+      line-height:1.6;
+    }
 
-/* GALERÍA */
-.gallery{
-  display:grid;
-  grid-template-columns: repeat(3,1fr);
-  gap:10px;
-  margin-top:15px;
-}
-@media (max-width:720px){
-  .gallery{ grid-template-columns:1fr; }
-}
+    /* Gallery */
+    .gallery{
+      width:min(920px, 100%);
+      margin: 14px auto 0;
+      padding: 0 8px 4px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:10px;
+    }
+    @media (max-width:860px){ .gallery{ grid-template-columns: repeat(2,1fr);} }
+    @media (max-width:520px){ .gallery{ grid-template-columns: 1fr;} }
 
-.photo{
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
-  aspect-ratio:4/3;
-}
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    .ph{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.24);
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 16px 60px rgba(0,0,0,.14);
+      cursor:pointer;
+      position:relative;
+      aspect-ratio: 4 / 3;
+      transform: translateZ(0);
+    }
+    .ph img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.03);
+      transition: transform .25s ease;
+    }
+    .ph:hover img{ transform: scale(1.08); }
 
-/* STICKERS */
-.stickers{
-  margin-top:15px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-.stk{
-  width:70px;
-  height:70px;
-  border-radius:18px;
-  background:rgba(255,255,255,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.stk img{
-  width:85%;
-  height:85%;
-  object-fit:contain;
-}
+    /* Modal viewer */
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.52);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+      padding: 18px;
+    }
+    .modal.active{ display:flex; }
+    .modalbox{
+      width:min(980px, 96vw);
+      border-radius:22px;
+      overflow:hidden;
+      background: rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.24);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 28px 120px rgba(0,0,0,.24);
+      position:relative;
+    }
+    .modalbox img{
+      width:100%;
+      height:min(78vh, 720px);
+      object-fit:contain;
+      background: rgba(0,0,0,.18);
+      display:block;
+    }
+    .x{
+      position:absolute; top:10px; right:10px;
+      width:44px; height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.24);
+      background: rgba(0,0,0,.25);
+      color:#fff;
+      cursor:pointer;
+      font-weight:900;
+    }
 
-/* ANIMACIÓN */
-.floating{
-  position:fixed;
-  width:60px;
-  height:60px;
-  pointer-events:none;
-  animation: drift 8s linear forwards;
-  z-index:10;
-}
-@keyframes drift{
-  from{ transform: translate(var(--sx), 105vh) rotate(var(--r)); }
-  to{ transform: translate(var(--ex), -20vh) rotate(calc(var(--r) + 80deg)); }
-}
-</style>
+    /* Start overlay */
+    .overlay{
+      position:fixed; inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.26);
+      backdrop-filter: blur(10px);
+      z-index:40;
+      padding:18px;
+    }
+    .startbox{
+      width:min(760px, 94vw);
+      border-radius:30px;
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.26);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      padding: 24px 20px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .startbox::before{
+      content:"";
+      position:absolute; inset:-50%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.24), transparent 70%);
+      transform: translate(12%, -12%);
+      pointer-events:none;
+      opacity:.65;
+    }
+    .startbox .tag{
+      display:inline-block;
+      margin-bottom: 12px;
+    }
+
+    /* Confetti canvas */
+    canvas{ position:fixed; inset:0; pointer-events:none; z-index:6; }
+
+    /* Hearts (small) */
+    .heart{
+      position:fixed;
+      width:14px; height:14px;
+      background: rgba(255,255,255,.75);
+      transform: rotate(45deg);
+      pointer-events:none;
+      z-index:6;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.18));
+    }
+    .heart:before,.heart:after{
+      content:"";
+      position:absolute;
+      width:14px; height:14px;
+      border-radius:50%;
+      background: inherit;
+    }
+    .heart:before{ left:-7px; top:0; }
+    .heart:after{ left:0; top:-7px; }
+
+    @keyframes floatUp{
+      from{ opacity:.95; transform: translate(var(--x), 110vh) rotate(45deg) scale(var(--s)); }
+      to{ opacity:0; transform: translate(var(--x2), -18vh) rotate(45deg) scale(var(--s)); }
+    }
+
+    /* Nailong stickers scattered */
+    .nailong-layer{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:1;
+      opacity:.95;
+    }
+    .nailong{
+      position:absolute;
+      width:84px; height:84px;
+      opacity:.95;
+      filter: drop-shadow(0 16px 24px rgba(0,0,0,.18));
+      transform: rotate(var(--r)) scale(var(--s));
+      animation: bob var(--t) ease-in-out infinite alternate;
+    }
+    @keyframes bob{
+      from{ transform: translateY(0) rotate(var(--r)) scale(var(--s)); }
+      to{ transform: translateY(-10px) rotate(calc(var(--r) + 3deg)) scale(var(--s)); }
+    }
+
+    /* Floating Nailong (when YES) */
+    .floating{
+      position:fixed;
+      width:68px; height:68px;
+      pointer-events:none;
+      z-index:7;
+      animation: driftUp linear forwards;
+      filter: drop-shadow(0 16px 24px rgba(0,0,0,.18));
+    }
+    @keyframes driftUp{
+      from{ transform: translate(var(--sx), 110vh) rotate(var(--r)); opacity:.98;}
+      to{ transform: translate(var(--ex), -22vh) rotate(calc(var(--r) + 90deg)); opacity:0;}
+    }
+
+    /* Small corner badge */
+    .badge{
+      position:absolute;
+      left:18px; top:18px;
+      width:44px; height:44px;
+      border-radius:16px;
+      background: rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.26);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 16px 60px rgba(0,0,0,.10);
+      z-index:2;
+    }
+    .badge span{ font-weight:900; }
+
+    /* Typewriter effect */
+    .type{
+      display:inline-block;
+      border-right: 2px solid rgba(43,18,26,.55);
+      padding-right:4px;
+      animation: caret .8s steps(1) infinite;
+    }
+    @keyframes caret{ 50%{ border-color: transparent; } }
+
+    /* Little footer hint */
+    .hint{
+      margin-top: 10px;
+      font-size: 12px;
+      opacity:.8;
+      color: rgba(43,18,26,.68);
+    }
+
+    /* Make NO button positionable */
+    #noBtn{ position:relative; }
+
+  </style>
 </head>
 
 <body>
+  <div class="bg-shimmer"></div>
 
-<div class="card" id="startCard">
-  <div style="margin-bottom:10px;font-weight:600;">
-    De: Tu Sorata ❤️ Para: Mi Mashiro
-  </div>
-  <h1>Presiona para comenzar 💘</h1>
-  <p>Prometo que es rápido, bonito y con intención.</p>
-  <button class="btn" onclick="start()">Empezar</button>
-</div>
+  <!-- scattered nailongs -->
+  <div class="nailong-layer" id="nailongLayer"></div>
 
-<div class="card hidden" id="questionCard">
-  <h1>¿Quieres ser mi Valentine? 💖</h1>
-  <p>No es un sueño. Es una meta. Y yo voy contigo.</p>
-  <button class="btn" onclick="sayYes()">Sí, obvio 💞</button>
-  <button class="btn btn-secondary">No 😝</button>
-</div>
+  <canvas id="confetti"></canvas>
 
-<div class="card hidden" id="afterYes">
-  <h1>Sabía que eras mi sí 💘</h1>
-  <p>No es un regalo. Es una decisión: caminar contigo.</p>
-
-  <div class="pill">
-    <h3>Una meta</h3>
-    <p>Esa casita en el campo no es un sueño. Es una meta. Y la vamos a cumplir paso a paso.</p>
+  <div class="topline">
+    <div class="tagbar">
+      <div class="tag">De: <b>Tu Sorata</b> ❤️ Para: <b>Mi Mashiro</b></div>
+      <div class="tag"><b>Te amo infinito</b></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <button class="btn ghost" id="musicToggle" type="button">Música: OFF</button>
+      </div>
+    </div>
   </div>
 
-  <div class="pill">
-    <h3>Una promesa</h3>
-    <p>Te elijo con paciencia y con locura. Con compromiso. Con intención real.</p>
+  <!-- Start overlay -->
+  <div class="overlay" id="overlay">
+    <div class="startbox">
+      <div class="tag">De: Tu Sorata ❤️ Para: Mi Mashiro · Te amo infinito</div>
+      <h1 style="margin-top:6px;">Presiona para comenzar 💘</h1>
+      <p class="subtitle">Prometo que esto no parece hecho en 2 minutos. Es para ti, con intención.</p>
+      <div class="actions" style="margin-top:16px;">
+        <button class="btn primary" id="startBtn" type="button">Empezar</button>
+        <button class="btn secondary" id="musicBtn" type="button">Música: OFF</button>
+      </div>
+      <div class="hint">Tip: en iPhone a veces tienes que tocar “Empezar” y luego “Música”.</div>
+    </div>
   </div>
 
-  <div class="pill">
-    <h3>Un inicio</h3>
-    <p>No quiero que mi futuro te incluya. Mi futuro es contigo.</p>
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="badge" title="un mensajito"><span>💗</span></div>
+
+      <!-- Slide 1 -->
+      <section class="slide active" id="s1">
+        <div class="center">
+          <h1>Mi Mashiro…</h1>
+          <p class="subtitle">
+            Antes de preguntarte algo, solo quiero dejarte esto aquí:
+            <span class="type" id="tw"></span>
+          </p>
+          <div class="actions">
+            <button class="btn primary" id="next1" type="button">Siguiente</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2 -->
+      <section class="slide" id="s2">
+        <div class="center">
+          <h1>¿Quieres ser mi Valentine? 💖</h1>
+          <p class="subtitle">No es un sueño. Es una meta. Y yo voy contigo.</p>
+          <div class="actions">
+            <button class="btn primary" id="yesBtn" type="button">Sí, obvio 💞</button>
+            <button class="btn secondary" id="noBtn" type="button">No 😝</button>
+          </div>
+          <div class="hint">Intenta decir “No”… si puedes 😌</div>
+        </div>
+      </section>
+
+      <!-- Slide 3 -->
+      <section class="slide" id="s3">
+        <div class="center">
+          <h1>Sabía que eras mi sí 💘</h1>
+          <p class="subtitle">No es un regalo. Es una decisión: caminar contigo.</p>
+
+          <div class="grid">
+            <div class="mini">
+              <b>Una meta</b>
+              <span>Esa casita en el campo no es un sueño. Es una meta. Y la vamos a cumplir paso a paso.</span>
+            </div>
+            <div class="mini">
+              <b>Una promesa</b>
+              <span>Te elijo con paciencia y con locura. Con compromiso. Con intención real.</span>
+            </div>
+            <div class="mini">
+              <b>Un inicio</b>
+              <span>No quiero que mi futuro te incluya. Mi futuro es contigo.</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="reveal" type="button">Ver mensajito final</button>
+            <button class="btn ghost" id="photosBtn" type="button">Ver fotos 📸</button>
+          </div>
+
+          <p class="subtitle" id="finalMsg" style="display:none; margin-top:10px; font-weight:800; color:rgba(43,18,26,.92);">
+            Te amo infinito, Mi Mashiro. ¿Me dejas construir nuestro futuro contigo?
+          </p>
+
+          <div class="gallery" id="gallery" style="margin-top:16px;"></div>
+        </div>
+      </section>
+
+    </div>
   </div>
 
-  <div class="pill">
-    <h3>Un pedacito de nosotros 📸</h3>
-    <div class="gallery" id="gallery"></div>
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modalbox">
+      <button class="x" id="closeModal" type="button">✕</button>
+      <img id="modalImg" alt="foto">
+    </div>
   </div>
 
-  <div class="pill">
-    <h3>Nailong siempre contigo 🦖💛</h3>
-    <div class="stickers" id="stickers"></div>
-  </div>
-
-</div>
+  <!-- Audio -->
+  <audio id="bgm" loop preload="auto">
+    <!-- Opción A: música local en tu repo -->
+    <source src="assets/music.mp3" type="audio/mpeg">
+    <!-- Opción B (fallback): música externa -->
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5fae4b88a4.mp3" type="audio/mpeg">
+  </audio>
 
 <script>
+/* =========================
+   CONFIG (edítalo a tu gusto)
+========================= */
+const PHOTO_FILES = [
+  "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg"
+]; // pon las que tengas en assets/photos/
 
-// FOTOS (pon tus imágenes en assets/photos/)
-const photos = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg"];
+const STICKER_FILES = [
+  "n1.png","n2.png","n3.png","n4.png","n5.png","n6.png","n7.png","n8.png"
+]; // pon tus Nailong en assets/stickers/
 
-// STICKERS (pon tus png en assets/stickers/)
-const stickers = ["n1.png","n2.png","n3.png","n4.png","n5.png","n6.png"];
+/* =========================
+   Typewriter
+========================= */
+const twText = "no es la distancia… es el camino. Y yo te elijo.";
+const twEl = document.getElementById("tw");
+let twI = 0;
+function typeWriter(){
+  if(twI <= twText.length){
+    twEl.textContent = twText.slice(0, twI);
+    twI++;
+    setTimeout(typeWriter, 42);
+  }
+}
+twEl.classList.add("type");
 
-function start(){
-  document.getElementById("startCard").classList.add("hidden");
-  document.getElementById("questionCard").classList.remove("hidden");
+/* =========================
+   Slides
+========================= */
+const overlay = document.getElementById("overlay");
+const s1 = document.getElementById("s1");
+const s2 = document.getElementById("s2");
+const s3 = document.getElementById("s3");
+
+function showSlide(which){
+  [s1,s2,s3].forEach(s => s.classList.remove("active"));
+  which.classList.add("active");
 }
 
-function sayYes(){
-  document.getElementById("questionCard").classList.add("hidden");
-  document.getElementById("afterYes").classList.remove("hidden");
-  loadGallery();
-  loadStickers();
-  floatStickers(12);
+/* =========================
+   Music
+========================= */
+const audio = document.getElementById("bgm");
+let musicOn = false;
+const musicToggle = document.getElementById("musicToggle");
+const musicBtn = document.getElementById("musicBtn");
+function setMusicLabels(){
+  const label = `Música: ${musicOn ? "ON" : "OFF"}`;
+  musicToggle.textContent = label;
+  musicBtn.textContent = label;
+}
+async function toggleMusic(){
+  try{
+    if(!musicOn){
+      await audio.play();
+      musicOn = true;
+    }else{
+      audio.pause();
+      musicOn = false;
+    }
+    setMusicLabels();
+  }catch(e){
+    // iOS sometimes blocks until user gesture; overlay buttons are gestures.
+  }
+}
+musicToggle.addEventListener("click", toggleMusic);
+musicBtn.addEventListener("click", toggleMusic);
+setMusicLabels();
+
+/* =========================
+   Start
+========================= */
+document.getElementById("startBtn").addEventListener("click", async () => {
+  overlay.style.display = "none";
+  typeWriter();
+  // try turning music on after user gesture
+  await toggleMusic();
+});
+document.getElementById("next1").addEventListener("click", () => {
+  showSlide(s2);
+});
+
+/* =========================
+   NO button escapes
+========================= */
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+function escapeNo(){
+  const maxX = 240;
+  const maxY = 160;
+  const x = Math.random()*maxX - maxX/2;
+  const y = Math.random()*maxY - maxY/2;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener("mouseover", escapeNo);
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); escapeNo(); }, {passive:false});
+
+/* =========================
+   Gallery + modal
+========================= */
+const gallery = document.getElementById("gallery");
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+const closeModal = document.getElementById("closeModal");
+
+function renderGallery(){
+  if(!gallery) return;
+  gallery.innerHTML = PHOTO_FILES.map((f,i)=>`
+    <div class="ph" data-i="${i}">
+      <img src="assets/photos/${f}" alt="foto ${i+1}">
+    </div>
+  `).join("");
+  gallery.querySelectorAll(".ph").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const i = Number(el.dataset.i);
+      modalImg.src = `assets/photos/${PHOTO_FILES[i]}`;
+      modal.classList.add("active");
+    });
+  });
+}
+closeModal.addEventListener("click", ()=> modal.classList.remove("active"));
+modal.addEventListener("click", (e)=>{ if(e.target === modal) modal.classList.remove("active"); });
+
+document.getElementById("photosBtn").addEventListener("click", ()=>{
+  const g = document.getElementById("gallery");
+  if(g) g.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* =========================
+   Confetti
+========================= */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+let W,H,confetti=[], animating=false;
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+function burstConfetti(){
+  confetti = [];
+  const colors = ["#ffffff","#ffe3ea","#ffd1dc","#ff4f76","#fff0f4","#ff96aa"];
+  for(let i=0;i<200;i++){
+    confetti.push({
+      x: W/2, y: H/2,
+      vx: (Math.random()*10 - 5),
+      vy: (Math.random()*10 - 7),
+      g: 0.14 + Math.random()*0.10,
+      s: 2 + Math.random()*3,
+      a: 1,
+      c: colors[(Math.random()*colors.length)|0]
+    });
+  }
+  animateConfetti();
+}
+function animateConfetti(){
+  if(animating) return;
+  animating = true;
+  (function frame(){
+    ctx.clearRect(0,0,W,H);
+    confetti.forEach(p=>{
+      p.vy += p.g;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.a *= 0.986;
+      ctx.globalAlpha = Math.max(0, p.a);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(p.x,p.y,p.s,p.s);
+    });
+    confetti = confetti.filter(p=>p.a>0.06 && p.y < H+30);
+    ctx.globalAlpha = 1;
+    if(confetti.length) requestAnimationFrame(frame);
+    else { ctx.clearRect(0,0,W,H); animating=false; }
+  })();
 }
 
-function loadGallery(){
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = photos.map(p =>
-    `<div class="photo"><img src="assets/photos/${p}"></div>`
-  ).join("");
-}
-
-function loadStickers(){
-  const cont = document.getElementById("stickers");
-  cont.innerHTML = stickers.map(s =>
-    `<div class="stk"><img src="assets/stickers/${s}"></div>`
-  ).join("");
-}
-
-function floatStickers(times){
-  for(let i=0;i<times;i++){
-    const img=document.createElement("img");
-    img.src=`assets/stickers/${stickers[Math.floor(Math.random()*stickers.length)]}`;
-    img.className="floating";
-    img.style.setProperty("--sx",Math.random()*100+"vw");
-    img.style.setProperty("--ex",Math.random()*100+"vw");
-    img.style.setProperty("--r",(Math.random()*40-20)+"deg");
-    document.body.appendChild(img);
-    setTimeout(()=>img.remove(),8000);
+/* =========================
+   Hearts
+========================= */
+function spawnHearts(n=18){
+  for(let i=0;i<n;i++){
+    const h = document.createElement("div");
+    h.className = "heart";
+    const x = Math.random()*100;
+    const x2 = x + (Math.random()*26 - 13);
+    const s = (Math.random()*0.9 + 0.6).toFixed(2);
+    h.style.setProperty("--x", x+"vw");
+    h.style.setProperty("--x2", x2+"vw");
+    h.style.setProperty("--s", s);
+    h.style.animationDuration = (Math.random()*2.4 + 2.2) + "s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 5200);
   }
 }
 
-</script>
+/* =========================
+   Nailong scattered layer
+========================= */
+const nailongLayer = document.getElementById("nailongLayer");
 
+function pickSticker(){
+  return STICKER_FILES[(Math.random()*STICKER_FILES.length)|0];
+}
+
+function placeStaticNailongs(count=14){
+  if(!nailongLayer) return;
+  nailongLayer.innerHTML = "";
+  for(let i=0;i<count;i++){
+    const img = document.createElement("img");
+    img.src = `assets/stickers/${pickSticker()}`;
+    img.className = "nailong";
+    const left = Math.random()*92 + 4;     // avoid edges too hard
+    const top  = Math.random()*86 + 6;
+    img.style.left = left + "vw";
+    img.style.top = top + "vh";
+    img.style.setProperty("--r", (Math.random()*50 - 25) + "deg");
+    img.style.setProperty("--s", (Math.random()*0.55 + 0.75).toFixed(2));
+    img.style.setProperty("--t", (Math.random()*4 + 3) + "s");
+    img.style.opacity = (Math.random()*0.18 + 0.68).toFixed(2);
+    nailongLayer.appendChild(img);
+  }
+}
+placeStaticNailongs(14);
+window.addEventListener("resize", ()=> placeStaticNailongs(14));
+
+function floatNailongs(times=12){
+  for(let i=0;i<times;i++){
+    const img = document.createElement("img");
+    img.src = `assets/stickers/${pickSticker()}`;
+    img.className = "floating";
+    img.style.setProperty("--sx", (Math.random()*100) + "vw");
+    img.style.setProperty("--ex", (Math.random()*100) + "vw");
+    img.style.setProperty("--r", (Math.random()*60 - 30) + "deg");
+    img.style.animationDuration = (Math.random()*3 + 6) + "s";
+    const size = Math.random()*18 + 56;
+    img.style.width = size + "px";
+    img.style.height = size + "px";
+    document.body.appendChild(img);
+    setTimeout(()=>img.remove(), 9200);
+  }
+}
+
+/* =========================
+   YES flow
+========================= */
+const finalMsg = document.getElementById("finalMsg");
+document.getElementById("reveal").addEventListener("click", ()=>{
+  finalMsg.style.display = "block";
+  spawnHearts(12);
+  floatNailongs(8);
+});
+
+yesBtn.addEventListener("click", ()=>{
+  showSlide(s3);
+  burstConfetti();
+  spawnHearts(22);
+  floatNailongs(16);
+  renderGallery();
+});
+
+/* Extra: if she tries to click NO a lot, reward her */
+let noTries = 0;
+noBtn.addEventListener("click", ()=>{
+  noTries++;
+  if(noTries >= 3){
+    alert("No te dejo 😌💛 (di que sí)");
+    noTries = 0;
+  }
+});
+</script>
 </body>
 </html>
